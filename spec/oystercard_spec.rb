@@ -8,24 +8,26 @@ describe Oystercard do
 
   #plan to remove this test when refactoring once we have respond to money with 1 argument working
 
-  it 'responds to add_money with 1 argument' do
-    expect(subject).to respond_to(:add_money).with(1).argument
-  end
-
   describe '#add money' do
+    it 'responds to add_money with 1 argument' do
+      expect(subject).to respond_to(:add_money).with(1).argument
+    end
+
     it 'does not allow user to add more than maximum funds' do
       subject.add_money(90)
       expect { subject.add_money(1) }.to raise_error 'funds cannot be added: maximum balance £90'
     end
   end
 
-  it 'responds to balance' do
-    subject.balance
-    expect(subject).to respond_to :balance
-  end
-
-  it 'returns balance' do
-    expect(subject.balance).to eq(0)
+  describe '#balance' do
+    it 'responds to balance' do
+      subject.balance
+      expect(subject).to respond_to :balance
+    end
+  
+    it 'returns balance' do
+      expect(subject.balance).to eq(0)
+    end  
   end
 
   it 'creates an instance of Oystercard' do
@@ -37,15 +39,14 @@ describe Oystercard do
   end
 
   it 'can touch_in' do
-    expect(subject.touch_in).to eq ["on journey"]
-  end
-
-  it 'can_touch_out' do
-    subject.touch_in
-    expect(subject.touch_out).to eq []
+    expect(subject.touch_in).to eq "touched_in"
   end
 
   describe '#can_touch_out' do
+    it 'can_touch_out' do
+      subject.touch_in
+      expect(subject.touch_out).to eq "touched_out"
+    end
     it 'can only touch_out if touched in' do
       expect { subject.touch_out }.to raise_error "You're not touched in"
     end
@@ -53,7 +54,7 @@ describe Oystercard do
 
   it "tells user if they are on a journey" do
     subject.touch_in
-    expect(subject.on_journey?).to eq ["on journey"]
+    expect(subject.on_journey?).to eq true
   end
 
 

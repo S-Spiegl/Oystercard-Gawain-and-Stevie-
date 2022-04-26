@@ -5,7 +5,7 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @journey_checker = []
+    @journey_checker = "touched_out"
   end
 
   def add_money(money)
@@ -18,17 +18,16 @@ class Oystercard
   end
 
   def touch_in
-    @journey_checker << "on journey"
+    @journey_checker = "touched_in"
   end
 
   def touch_out
-    fail "You're not touched in" if @journey_checker.empty?
-    @journey_checker.pop
-    @journey_checker
+    fail "You're not touched in" unless on_journey?
+    @journey_checker = "touched_out"
   end
 
   def on_journey?
-    @journey_checker
+    @journey_checker == "touched_in"
   end
 
   private
