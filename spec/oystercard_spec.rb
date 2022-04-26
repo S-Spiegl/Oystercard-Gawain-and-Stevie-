@@ -35,4 +35,13 @@ describe Oystercard do
   it 'responds to deduct_money with 1 argument' do
     expect(subject).to respond_to(:deduct_money).with(1).argument
   end
+
+  it 'can touch_in' do
+    expect(subject.touch_in).to eq true
+  end
+
+  it 'can touch_out' do
+    expect(subject.touch_out).to eq true
+  end
+
 end

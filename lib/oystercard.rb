@@ -15,6 +15,16 @@ class Oystercard
   def deduct_money(money)
     @balance -= money
   end
+
+  def touch_in
+    true
+  end
+
+  def touch_out
+    true
+  end
+
+  private 
   #single responsibility principle honoured by making max_balance_exceeded method instead of
   #including @balance >= MAX_BALANCE in the fail method above
   def max_balance_exceeded
