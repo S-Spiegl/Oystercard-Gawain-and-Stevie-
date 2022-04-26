@@ -37,11 +37,24 @@ describe Oystercard do
   end
 
   it 'can touch_in' do
-    expect(subject.touch_in).to eq true
+    expect(subject.touch_in).to eq ["on journey"]
   end
 
-  it 'can touch_out' do
-    expect(subject.touch_out).to eq true
+  it 'can_touch_out' do
+    subject.touch_in
+    expect(subject.touch_out).to eq []
   end
+
+  describe '#can_touch_out' do
+    it 'can only touch_out if touched in' do
+      expect { subject.touch_out }.to raise_error "You're not touched in"
+    end
+  end
+
+  it "tells user if they are on a journey" do
+    subject.touch_in
+    expect(subject.on_journey?).to eq ["on journey"]
+  end
+
 
 end

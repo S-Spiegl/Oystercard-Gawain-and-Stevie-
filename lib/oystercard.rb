@@ -5,26 +5,33 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @journey_checker = []
   end
 
   def add_money(money)
     fail "funds cannot be added: maximum balance £#{MAX_BALANCE}" if max_balance_exceeded
     @balance += money
   end
-  
+
   def deduct_money(money)
     @balance -= money
   end
 
   def touch_in
-    true
+    @journey_checker << "on journey"
   end
 
   def touch_out
-    true
+    fail "You're not touched in" if @journey_checker.empty?
+    @journey_checker.pop
+    @journey_checker
   end
 
-  private 
+  def on_journey?
+    @journey_checker
+  end
+
+  private
   #single responsibility principle honoured by making max_balance_exceeded method instead of
   #including @balance >= MAX_BALANCE in the fail method above
   def max_balance_exceeded
