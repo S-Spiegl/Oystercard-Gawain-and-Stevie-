@@ -34,9 +34,9 @@ describe Oystercard do
     expect(subject).to be_instance_of(Oystercard)
   end
 
-  it 'responds to deduct_money with 1 argument' do
-    expect(subject).to respond_to(:deduct_money).with(1).argument
-  end
+  # it 'responds to deduct_money with 1 argument' do
+  #   expect(subject).to respond_to(:deduct_money).with(1).argument
+  # end
 
   it 'can touch_in' do
     subject.add_money(Oystercard::MIN_BALANCE)

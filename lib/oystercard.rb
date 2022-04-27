@@ -14,10 +14,6 @@ class Oystercard
     @balance += money
   end
 
-  def deduct_money(money)
-    @balance -= money
-  end
-
   def touch_in
     fail "Insufficient funds" if @balance < MIN_BALANCE
     @journey_checker = "touched_in"
@@ -25,6 +21,7 @@ class Oystercard
 
   def touch_out
     fail "You're not touched in" unless on_journey?
+    deduct_money(MIN_BALANCE)
     @journey_checker = "touched_out"
   end
 
@@ -37,6 +34,10 @@ class Oystercard
   #including @balance >= MAX_BALANCE in the fail method above
   def max_balance_exceeded
     @balance >= MAX_BALANCE
+  end
+
+  def deduct_money(money)
+    @balance -= money
   end
 
 end
