@@ -69,4 +69,10 @@ describe Oystercard do
     subject.touch_in
     expect{ subject.touch_out }.to change {subject.balance}.by(-Oystercard::MIN_BALANCE)
   end
+
+  it 'remembers entry station' do
+    subject.add_money(1)
+    subject.touch_in
+    expect(subject.entry_station).not_to eq nil
+  end
 end
