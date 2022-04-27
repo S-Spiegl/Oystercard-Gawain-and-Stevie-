@@ -23,8 +23,17 @@ describe Oystercard do
   describe '# journey_history' do
     it 'records and returns journey history' do
       subject.add_money(Oystercard::MAX_BALANCE)
-      3.times { subject.touch_in(station); subject.touch_out }
+      3.times { subject.touch_in(station); subject.touch_out(station) }
       expect(subject.journey_history).not_to be_empty
+    end
+  end
+
+  describe '# current_journey' do
+    it 'records entry and exit station' do
+      subject.add_money(Oystercard::MAX_BALANCE)
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.current_journey).to eq({:entry=>station, :exit=>station})
     end
   end
 
@@ -52,13 +61,13 @@ describe Oystercard do
  
   describe '# touch_out' do
     it 'can only touch_out if touched in' do
-      expect { subject.touch_out }.to raise_error "You're not touched in"
+      expect { subject.touch_out(station) }.to raise_error "You're not touched in"
     end
 
     it "removes fare from balance" do
       subject.add_money(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
-      expect{ subject.touch_out }.to change {subject.balance}.by(-Oystercard::MIN_BALANCE)
+      expect{ subject.touch_out(station) }.to change {subject.balance}.by(-Oystercard::MIN_BALANCE)
     end
   end
 
