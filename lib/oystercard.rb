@@ -2,6 +2,7 @@ class Oystercard
   attr_reader :balance
   attr_reader :entry_station
   attr_reader :journey_history
+  attr_reader :current_journey
 
   MAX_BALANCE = 90
   MIN_BALANCE = 1
@@ -10,6 +11,7 @@ class Oystercard
     @balance = 0
     @entry_station = nil
     @journey_history = []
+    @current_journey = {entry: nil, exit: nil}
   end
 
   def add_money(money)
@@ -20,21 +22,19 @@ class Oystercard
   def touch_in(station)
     fail "Insufficient funds" if @balance < MIN_BALANCE
     @entry_station = station
-    @journey_history << station
+    @current_journey[:entry] = station
   end
 
   def touch_out(station)
     fail "You're not touched in" unless on_journey?
     deduct_money(MIN_BALANCE)
-    @entry_station = nil
-    @journey_history << station
+    @current_journey[:exit] = station
+    @journey_history << @current_journey
   end
 
   def on_journey?
     @entry_station == nil ? false : true
   end
-
-
 
   private
   #single responsibility principle honoured by making max_balance_exceeded method instead of
