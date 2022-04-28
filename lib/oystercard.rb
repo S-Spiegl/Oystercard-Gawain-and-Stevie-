@@ -1,4 +1,6 @@
 class Oystercard
+  #need to write custom accessors to replace attribute readers as per instructions in step 12
+
   attr_reader :balance
   attr_reader :entry_station
   attr_reader :journey_history
@@ -20,7 +22,7 @@ class Oystercard
   end
 
   def touch_in(station)
-    fail "Insufficient funds" if @balance < MIN_BALANCE
+    fail "Insufficient funds" if balance < MIN_BALANCE
     @entry_station = station
     @current_journey[:entry] = station
   end
@@ -40,7 +42,7 @@ class Oystercard
   #single responsibility principle honoured by making max_balance_exceeded method instead of
   #including @balance >= MAX_BALANCE in the fail method above
   def max_balance_exceeded
-    @balance >= MAX_BALANCE
+    balance >= MAX_BALANCE
   end
 
   def deduct_money(money)
