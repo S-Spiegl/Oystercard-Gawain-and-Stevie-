@@ -29,7 +29,7 @@ class Oystercard
 
   def touch_out(station)
     fail "You're not touched in" unless on_journey?
-    deduct_money(MIN_BALANCE)
+    deduct(MIN_BALANCE)
     @current_journey[:exit] = station
     @journey_history << @current_journey
   end
@@ -45,8 +45,8 @@ class Oystercard
     balance >= MAX_BALANCE
   end
 
-  def deduct_money(money)
-    @balance -= money
+  def deduct(fare)
+    @balance -= fare
   end
 
 end
