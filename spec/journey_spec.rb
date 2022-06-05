@@ -32,4 +32,13 @@ describe Journey do
       expect(subject.fare).to eq (Journey::PENALTY_FARE)
     end
   end
+
+  describe '#complete?' do
+    it "should return true when journey is complete" do
+      subject.start_journey(entry_station)
+      subject.end_journey(exit_station)
+      expect(subject).to be_complete
+    end
+  end
+
 end
